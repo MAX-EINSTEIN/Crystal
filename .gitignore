@@ -1,0 +1,8 @@
+#vscode files
+.vscode/
+
+#linux build files
+linux/
+
+#win32 build files
+win32/
