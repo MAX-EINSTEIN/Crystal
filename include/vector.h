@@ -134,4 +134,3 @@ size_t vector_capacity(Vector *vector);
  */
 
 VectorValue vector_at(Vector* vector, size_t index);
-
