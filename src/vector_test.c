@@ -42,6 +42,33 @@ int main() {
         printf("Vector size = %ld\n", vector_size(myvector));
         printf("Vector capacity = %ld\n", vector_capacity(myvector));
     }
+
+    printf("TESTING vector_at, vector_insert and vector_erase\n");
+    {
+        vector_insert(myvector,&a[8],2);
+        int a = *((int*)vector_at(myvector,2));
+        printf("Value at index 2 : %d\n",a);
+        printf("Vector size = %ld\n", vector_size(myvector));
+        printf("Vector capacity = %ld\n", vector_capacity(myvector));
+        vector_erase(myvector,2);
+        a = *((int*)vector_at(myvector,2));
+        printf("Value at index 2 : %d\n",a);
+        printf("Vector size = %ld\n", vector_size(myvector));
+        printf("Vector capacity = %ld\n", vector_capacity(myvector));        
+    }
+
+    printf("TESTING vector_pop_back, vector_pop_front, vector_front and vector_back\n");
+    {
+        vector_pop_front(myvector);
+        int a = *((int*)vector_front(myvector));
+        printf("Value at front : %d\n", a);
+        vector_pop_back(myvector);
+        a = *((int*)vector_back(myvector));
+        printf("Value at back : %d\n", a);
+
+        printf("Vector size = %ld\n", vector_size(myvector));
+        printf("Vector capacity = %ld\n", vector_capacity(myvector)); 
+    }
     
     vector_free(myvector);
     return 0;

@@ -80,21 +80,21 @@ static bool vector_realloc(Vector* vector){
 
 bool vector_insert(Vector* vector, VectorValue data, size_t index){
     // Return false if index is greater than vector's size
-    if(index > vector->size){
+    if(index > vector_size(vector)){
         return false;
     }
 
     // Reallocate the vector if required
-    if(vector->size + 1 > vector->capacity){
+    if(vector_size(vector) + 1 > vector_capacity(vector)){
         if(!vector_realloc(vector)){
             return false;
         }
     }
 
-    // Move the index of vector array from index onwards
+    // Move the contents of vector array from index onwards
     memmove(&vector->array[index + 1],
             &vector->array[index],
-            (vector->size - index) * sizeof(VectorValue));
+            (vector_size(vector) - index) * sizeof(VectorValue));
 
     // Insert the new data at specified index
     vector->array[index] = data;
@@ -110,7 +110,39 @@ bool vector_push_front(Vector* vector, VectorValue data){
 
 
 bool vector_push_back(Vector* vector,VectorValue data){
-    return vector_insert(vector, data, vector->size);
+    return vector_insert(vector, data, vector_size(vector));
+}
+
+
+bool vector_erase(Vector* vector, size_t index){
+    // Return false if index is greater than vector's size
+    if(index > vector_size(vector)){
+        return false;
+    }
+
+    // Move the contents of vector array from index backwards
+    memmove(&vector->array[index],
+            &vector->array[index+1],
+            (vector_size(vector) - index) * sizeof(VectorValue));
+
+    --vector->size;
+
+    return true;
+}
+
+
+bool vector_pop_front(Vector* vector){
+    return vector_erase(vector,0);
+}
+
+
+bool vector_pop_back(Vector* vector){
+    return vector_erase(vector,vector_size(vector)-1);
+}
+
+
+bool vector_empty(Vector* vector){
+    return vector_size(vector) == 0;
 }
 
 
@@ -126,4 +158,14 @@ size_t vector_capacity(Vector *vector){
 
 VectorValue vector_at(Vector* vector, size_t index){
     return vector->array[index];
+}
+
+
+VectorValue vector_front(Vector* vector){
+    return vector_at(vector,0);
+}
+
+
+VectorValue vector_back(Vector* vector){
+    return vector_at(vector,vector_size(vector)-1);
 }
