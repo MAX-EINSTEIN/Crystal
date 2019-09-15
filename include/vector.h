@@ -36,7 +36,6 @@ CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  * To access the data in a vector by index, use @ref vector_at
  *
  * To sort a vector, use @ref vector_sort.
- *
  */
 
 #ifndef VECTOR_H
@@ -180,6 +179,7 @@ VectorValue vector_front(Vector* vector);
  * @return            VectorValue stored at back
  */
 VectorValue vector_back(Vector* vector);
+
 
 #ifdef __cplusplus
 }

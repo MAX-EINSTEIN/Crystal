@@ -19,7 +19,6 @@ CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  * @file queue.h
  *
  * @brief Queue
- *
  * A queue stores a collection of values and provide operations like adding
  * values/elements at back and removing from front. A queue is FIFO structure
  * i.e. First In First Out
@@ -49,14 +48,12 @@ CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  * A queue is represented by a struct _Queue and typedef-ed to Queue.
  * An empty queue is represented by a NULL pointer.
  */
-
 typedef struct _Queue Queue;
 
 
 /**
  * A value stored in a queue.
  */
-
 typedef void* QueueValue;
 
 
@@ -64,14 +61,12 @@ typedef void* QueueValue;
  * Returns a new instance of Queue
  * @return            Pointer to the new queue (Queue)
  */
-
 Queue* queue_new();
 
 
 /**
  * Frees the passed instance of Queue
  */
-
 void queue_free(Queue* queue);
 
 
@@ -79,7 +74,6 @@ void queue_free(Queue* queue);
  * Inserts an element at front of the queue
  * @return            True if successfull, false otherwise
  */
-
 bool queue_push(Queue* queue, QueueValue data);
 
 
@@ -87,7 +81,6 @@ bool queue_push(Queue* queue, QueueValue data);
  * Removes an element from front of the queue
  * @return            True if successfull, false otherwise
  */
-
 bool queue_pop(Queue* queue);
 
 
@@ -95,7 +88,6 @@ bool queue_pop(Queue* queue);
  * Returns an element which is at front of the queue
  * @return            Value at the front of the queue
  */
-
 QueueValue queue_front(Queue* queue);
 
 
@@ -103,7 +95,6 @@ QueueValue queue_front(Queue* queue);
  * Returns an element which is at back of the queue
  * @return            Value at the back of the queue
  */
-
 QueueValue queue_back(Queue* queue);
 
 
@@ -111,7 +102,6 @@ QueueValue queue_back(Queue* queue);
  * Checks for the emptiness of a queue
  * @return            Tur if the queue is empty, false otherwise
  */
-
 bool queue_empty(Queue* queue);
 
 
@@ -119,5 +109,4 @@ bool queue_empty(Queue* queue);
  * Returns size of the queue
  * @return            Size of the queue
  */
-
 size_t queue_size(Queue* queue);

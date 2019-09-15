@@ -41,14 +41,13 @@ CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  * To modify data in the list use @ref list_set_data.
  *
  * To sort a list, use @ref list_sort.
- *
  */
 
 #ifndef LIST_H
 #define LIST_H
 
-#include<stdlib.h>
-#include<stdbool.h>
+#include <stdlib.h>
+#include <stdbool.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -57,7 +56,6 @@ extern "C" {
 /**
  * Represents an entry in a doubly-linked list.  
  */
-
 typedef struct _ListEntry ListEntry;
 
 
@@ -74,7 +72,6 @@ typedef struct _List List;
 /**
  * A value stored in a list.
  */
-
 typedef void *ListValue;
 
 
@@ -87,7 +84,6 @@ typedef void *ListValue;
  *                    value2, a positive value if value1 should be sorted
  *                    after value2, zero if value1 and value2 are equal.
  */
-
 typedef int (*ListCompareFunc)(ListValue value1, ListValue value2);
 
 
@@ -100,7 +96,6 @@ typedef int (*ListCompareFunc)(ListValue value1, ListValue value2);
  * @return            True if value1 and value2 are equal, false
  *                    if they are not equal.
  */
-
 typedef bool (*ListEqualFunc)(ListValue value1, ListValue value2);
 
 
@@ -109,7 +104,6 @@ typedef bool (*ListEqualFunc)(ListValue value1, ListValue value2);
  *
  * @param data        Data to print
  */
-
 typedef void (*ListPrintData)(ListValue data);
 
 
@@ -126,7 +120,6 @@ List* list_new();
  *
  * @param list         The list to free.
  */
-
 void list_free(List *list);
 
 
@@ -137,7 +130,6 @@ void list_free(List *list);
  * @param data         The value to prepend.
  * @return             True if value is appended, otherwise false
  */
-
 bool list_push_front(List **list, ListValue data);
 
 
@@ -148,7 +140,6 @@ bool list_push_front(List **list, ListValue data);
  * @param data         The value to append.
  * @return             True if value is appended, otherwise false
  */
-
 bool list_push_back(List **list, ListValue data);
 
 
@@ -168,7 +159,6 @@ bool list_pop_front(List **list);
  * @param list         Pointer to the list to remove from.
  * @return             True if value is removed successfully, otherwise false
  */
-
 bool list_pop_back(List **list);
 
 
@@ -179,7 +169,6 @@ bool list_pop_back(List **list);
  * @param n          The index into the list .
  * @return           The entry at the specified index, or NULL if out of range.
  */
-
 ListEntry *list_nth_entry(List *list, unsigned int n);
 
 
@@ -201,7 +190,6 @@ ListValue list_data(ListEntry* entry);
  * @return           The value at the specified index, or @ref LIST_NULL if
  *                   unsuccessful.
  */
-
 ListValue list_nth_data(List *list, unsigned int n);
 
 
@@ -211,7 +199,6 @@ ListValue list_nth_data(List *list, unsigned int n);
  * @param list       The list.
  * @return           The number of entries in the list.
  */
-
 size_t list_size(List *list);
 
 
@@ -221,7 +208,6 @@ size_t list_size(List *list);
  * @param list       The list.
  * @return           True if list is empty, false otherwise .
  */
-
 bool list_empty(List *list);
 
 
@@ -230,7 +216,6 @@ bool list_empty(List *list);
  *
  * @param list       The list.
  */
-
 void list_reverse(List ** list);
 
 
@@ -241,7 +226,6 @@ void list_reverse(List ** list);
  * @param print_data A function to print a particular data       
  * @return           void
  */
-
 void list_print(List *list, ListPrintData print);
 
 
@@ -254,7 +238,6 @@ void list_print(List *list, ListPrintData print);
  * @param data       The value to remove from the list.
  * @return           The number of entries removed from the list.
  */
-
 bool list_remove_data(List **list, ListEqualFunc callback, ListValue data);
 
 
@@ -266,7 +249,6 @@ bool list_remove_data(List **list, ListEqualFunc callback, ListValue data);
  * @return           If the entry is not found in the list, returns false,
  *                   else returns true.
  */
-
 bool list_remove_nth_entry(List** list, size_t n);
 
 
@@ -276,7 +258,6 @@ bool list_remove_nth_entry(List** list, size_t n);
  * @param list          Pointer to the list to sort.
  * @param compare_func  Function used to compare values in the list.
  */
-
 void list_sort(List **list, ListCompareFunc compare_func);
 
 

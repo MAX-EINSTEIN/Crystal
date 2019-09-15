@@ -47,14 +47,12 @@ CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  * A stack is represented by a struct _Stack and typedef-ed to Stack.
  * A null stack is represented by a NULL pointer.
  */
-
 typedef struct _Stack Stack;
 
 
 /**
  * A value stored in a stack.
  */
-
 typedef void* StackValue;
 
 
@@ -62,14 +60,12 @@ typedef void* StackValue;
  * Returns a new instance of _Struct
  * @return            Pointer to the new stack (Stack*)
  */
-
 Stack* stack_new();
 
 
 /**
  * Frees the passed instance of _Struct
  */
-
 void stack_free(Stack* stack);
 
 
@@ -77,7 +73,6 @@ void stack_free(Stack* stack);
  * Pushes an element on top of the stack
  * @return            True if successfull, false otherwise
  */
-
 bool stack_push(Stack* stack, StackValue data);
 
 
@@ -85,7 +80,6 @@ bool stack_push(Stack* stack, StackValue data);
  * Pops an element from top of the stack
  * @return            True if successfull, false otherwise
  */
-
 bool stack_pop(Stack* stack);
 
 
@@ -93,7 +87,6 @@ bool stack_pop(Stack* stack);
  * Returns an element which is at top of the stack
  * @return            Value on the top of the stack
  */
-
 StackValue stack_top(Stack* stack);
 
 
@@ -101,7 +94,6 @@ StackValue stack_top(Stack* stack);
  * Checks for the emptiness of a stack
  * @return            True if the stack is empty, false otherwise
  */
-
 bool stack_empty(Stack* stack);
 
 
@@ -109,5 +101,4 @@ bool stack_empty(Stack* stack);
  * Returns size of the stack
  * @return            Size of the stack
  */
-
 size_t stack_size(Stack* stack);
