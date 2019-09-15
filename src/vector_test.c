@@ -69,6 +69,19 @@ int main() {
         printf("Vector size = %ld\n", vector_size(myvector));
         printf("Vector capacity = %ld\n", vector_capacity(myvector)); 
     }
+
+    printf("Testing iteration over a vector\n");
+    {
+        printf("Vector: { ");
+        for(int i=0; i<vector_size(myvector); i++){
+            int a = static_cast(int,vector_at(myvector,i));
+            if(i!=vector_size(myvector)-1)
+                printf("%d, ", a);
+            else 
+                printf("%d ", a);
+        }
+        printf("}\n");
+    }
     
     vector_free(myvector);
     return 0;

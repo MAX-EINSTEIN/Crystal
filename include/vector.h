@@ -39,10 +39,16 @@ CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
  */
 
+#ifndef VECTOR_H
+#define VECTOR_H
 
 #include <stdlib.h>
 #include <stdbool.h>
+#include "utility.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /**
  * A _Vector struct is used to represent a vector.
@@ -174,3 +180,9 @@ VectorValue vector_front(Vector* vector);
  * @return            VectorValue stored at back
  */
 VectorValue vector_back(Vector* vector);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif
