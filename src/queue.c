@@ -39,14 +39,12 @@ void queue_free(Queue* queue){
 
 
 bool queue_push(Queue* queue, QueueValue data){
-    List** queue_list = &(queue->list);
-    return list_push_back(queue_list,data);
+    return list_push_back(queue->list,data);
 }
 
 
 bool queue_pop(Queue* queue){
-    List** queue_list = &(queue->list);
-    return list_pop_front(queue_list);    
+    return list_pop_front(queue->list);    
 }
 
 

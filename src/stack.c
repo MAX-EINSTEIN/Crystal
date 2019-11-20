@@ -38,14 +38,12 @@ void stack_free(Stack* stack){
 
 
 bool stack_push(Stack* stack, StackValue data){
-    List** stack_list = &(stack->list);
-    return list_push_back(stack_list,data);
+    return list_push_back(stack->list,data);
 }
 
 
 bool stack_pop(Stack* stack){
-    List** stack_list = &(stack->list);
-    return list_pop_back(stack_list);
+    return list_pop_back(stack->list);
 }
 
 

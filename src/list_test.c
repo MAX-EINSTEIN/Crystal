@@ -39,8 +39,8 @@ int main()
 
     printf("\nTESTING list_push_front and list_push_back\n");
     {
-        list_push_front(&list, a);
-        list_push_front(&list, &a[1]);
+        list_push_front(list, a);
+        list_push_front(list, &a[1]);
 
         printf("List: ");
         list_print(list,print_int);
@@ -51,12 +51,12 @@ int main()
             printf("The list is empty.\n");
         }
 
-        list_push_front(&list, &a[2]);
-        list_push_front(&list, &a[3]);
-        list_push_back(&list, &a[4]);
-        list_push_back(&list, &a[5]);
-        list_push_front(&list,&a[6]);
-        list_push_back(&list,&a[7]);
+        list_push_front(list, &a[2]);
+        list_push_front(list, &a[3]);
+        list_push_back(list, &a[4]);
+        list_push_back(list, &a[5]);
+        list_push_front(list,&a[6]);
+        list_push_back(list,&a[7]);
 
         printf("List: ");
         list_print(list,print_int);
@@ -66,8 +66,8 @@ int main()
 
     printf("\nTESTING list_pop_front and list_pop_back\n");
     {
-        list_pop_front(&list);
-        list_pop_back(&list);
+        list_pop_front(list);
+        list_pop_back(list);
 
         printf("List: ");
         list_print(list,print_int);
@@ -77,22 +77,8 @@ int main()
     
     printf("\nTESTING list_sort\n");
     {
-        list_sort(&list,compares_int);
+        list_sort(list,compares_int);
         printf("List: ");
-        list_print(list,print_int);
-        printf("List size : %ld\n", list_size(list));
-    }
-
-
-    printf("\nTESTING list_reverse\n");
-    {
-        list_reverse(&list);
-        printf("List: ");
-        list_print(list,print_int);
-        printf("List size : %ld\n", list_size(list));
-
-        printf("Reverse Again.\nList: ");
-        list_reverse(&list);
         list_print(list,print_int);
         printf("List size : %ld\n", list_size(list));
     }
@@ -122,28 +108,28 @@ int main()
         }
 
         int data4 = *((int*)list_nth_data(list,4));
-        printf("Data at positon 4: %d\n",data4);
+        printf("Data at position 4: %d\n",data4);
 
         int data5 = *((int*)list_nth_data(list,5));
-        printf("Data at positon 5: %d\n",data5);
+        printf("Data at position 5: %d\n",data5);
 
         int data6 = *((int*)list_nth_data(list,6));
-        printf("Data at positon 6: %d\n",data6);
+        printf("Data at position 6: %d\n",data6);
     }
 
     printf("\nTESTING list_remove_nth entry && list_remove_data\n");
     {
-        list_remove_nth_entry(&list,1);        
-        list_remove_nth_entry(&list,3);
-        list_remove_nth_entry(&list,4);
+        list_remove_nth_entry(list,1);        
+        list_remove_nth_entry(list,3);
+        list_remove_nth_entry(list,4);
 
         printf("List: ");
         list_print(list,print_int);
         printf("List size : %ld\n", list_size(list));
 
-        list_remove_data(&list,equals_int,&a[1]);
-        list_remove_data(&list,equals_int,&a[2]);
-        list_remove_data(&list,equals_int,&a[4]);
+        list_remove_data(list,equals_int,&a[1]);
+        list_remove_data(list,equals_int,&a[2]);
+        list_remove_data(list,equals_int,&a[4]);
 
         printf("List: ");
         list_print(list,print_int);

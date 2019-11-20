@@ -27,12 +27,16 @@ struct _ListEntry {
 };
 
 
-/* Doubly Linked List */
-struct _List
-{
+struct _ListInternal{
     ListEntry * head;
     ListEntry * tail;
     size_t size;
+};
+
+/* Doubly Linked List */
+struct _List
+{
+    struct _ListInternal* _impl; 
 };
 
 
@@ -41,26 +45,40 @@ List* list_new(){
     if(new_list == NULL){
         return NULL;
     }
-    new_list->head = NULL;
-    new_list->tail = NULL;
-    new_list->size = 0;
+    new_list->_impl = (struct _ListInternal*) malloc(sizeof(struct _ListInternal));
+    if(new_list->_impl == NULL){
+        return NULL;
+    }
+    new_list->_impl->head = NULL;
+    new_list->_impl->tail = NULL;
+    new_list->_impl->size = 0;
     return new_list;
 }
 
 
 void list_free(List *list){
-    ListEntry* iterator = list->head;
+    if(list == NULL){
+        return;
+    }
+    ListEntry* iterator = list->_impl->head;
     while(iterator!=NULL){
         ListEntry* next = iterator->next;
         free(iterator);
         iterator = NULL;
         iterator = next;
     } 
+    if(list->_impl == NULL){
+        return;
+    }
+    free(list->_impl);
+    if(list == NULL){
+        return;
+    }
     free(list);
 }
 
 
-bool list_push_front(List **list, ListValue data){
+bool list_push_front(List *list, ListValue data){
     if(list == NULL){
         return false;
     }
@@ -71,24 +89,24 @@ bool list_push_front(List **list, ListValue data){
 
     newEntry->data = data;
 
-    if((*list)->head != NULL){
-        (*list)->head->prev = newEntry;
+    if(list->_impl->head != NULL){
+        list->_impl->head->prev = newEntry;
     }
 
     newEntry->prev = NULL;
-    newEntry->next = (*list)->head;
-    (*list)->head = newEntry;
+    newEntry->next = list->_impl->head;
+    list->_impl->head = newEntry;
 
-    if((*list)->tail == NULL){
-        (*list)->tail = newEntry;
+    if(list->_impl->tail == NULL){
+        list->_impl->tail = newEntry;
     }
 
-    (*list)->size++;
+    list->_impl->size++;
     return true;
 }
 
 
-bool list_push_back(List **list, ListValue data){
+bool list_push_back(List *list, ListValue data){
     if(list == NULL){
         return false;
     }
@@ -100,49 +118,49 @@ bool list_push_back(List **list, ListValue data){
     newEntry->data = data;
     newEntry->next = NULL;
 
-    if((*list)->tail!=NULL){
-        (*list)->tail->next = newEntry;
+    if(list->_impl->tail!=NULL){
+        list->_impl->tail->next = newEntry;
     }
 
-    newEntry->prev = (*list)->tail;
-    (*list)->tail = newEntry;
+    newEntry->prev = list->_impl->tail;
+    list->_impl->tail = newEntry;
 
-    if((*list)->head == NULL){
-        (*list)->head = newEntry;
+    if(list->_impl->head == NULL){
+        list->_impl->head = newEntry;
     }
 
-    (*list)->size++;
+    list->_impl->size++;
     return true;
 }
 
 
-bool list_pop_front(List **list){
+bool list_pop_front(List *list){
     if(list == NULL){
         return false;
     }
 
-    ListEntry* head = (*list)->head;
+    ListEntry* head = list->_impl->head;
     ListEntry* newHead = head->next;
     newHead->prev = NULL;
-    (*list)->head = newHead;
+    list->_impl->head = newHead;
     free(head);
-    (*list)->size--;
+    list->_impl->size--;
 
     return true;
 }
 
 
-bool list_pop_back(List **list){
+bool list_pop_back(List *list){
     if(list == NULL){
         return false;
     }
 
-    ListEntry* tail = (*list)->tail;
+    ListEntry* tail = list->_impl->tail;
     ListEntry* newTail = tail->prev;
     newTail->next = NULL;
-    (*list)->tail = newTail;
+    list->_impl->tail = newTail;
     free(tail);
-    (*list)->size--;
+    list->_impl->size--;
 
     return true;
 }
@@ -154,7 +172,7 @@ ListEntry *list_nth_entry(List *list, unsigned int n){
     }
 
     size_t i=1;
-    ListEntry* itr = list->head;
+    ListEntry* itr = list->_impl->head;
     while (itr!=NULL)
     {
         if(i==n){
@@ -182,32 +200,18 @@ ListValue list_nth_data(List *list, unsigned int n){
 
 
 size_t list_size(List *list){
-    return list ? list->size : 0;
+    return list ? list->_impl->size : 0;
 }
 
 
 bool list_empty(List *list){
-    return list->size == 0;
-}
-
-
-void list_reverse(List ** list){
-    List* newList = list_new();
-
-    ListEntry* itr = (*list)->head;
-    for(size_t i=0;i<list_size(*list);i++){
-        list_push_front(&newList,itr->data);
-        itr = itr->next;
-    }
-    list_free(*list);
-
-    (*list) = newList;
+    return list->_impl->size == 0;
 }
 
 
 void list_print(List *list, ListPrintData print){
     printf("{ ");
-    ListEntry* itr = list->head;
+    ListEntry* itr = list->_impl->head;
     for(size_t i=0;i<list_size(list);i++){
         char * str;
         if(i==list_size(list)-1){
@@ -224,19 +228,19 @@ void list_print(List *list, ListPrintData print){
 }
 
 
-bool list_remove_data(List **list, ListEqualFunc callback,ListValue data){
+bool list_remove_data(List *list, ListEqualFunc callback,ListValue data){
     if(list==NULL){
         return false;
     }
      
-    ListEntry* entry = (*list)->head;
+    ListEntry* entry = list->_impl->head;
 
-    for(size_t i=0; i<list_size(*list); i++){
+    for(size_t i=0; i<list_size(list); i++){
         if(callback(entry->data,data)){
             if(i==0){
-                (*list)->head = entry->next;
+                list->_impl->head = entry->next;
                 free(entry);
-                (*list)->size--;
+                list->_impl->size--;
                 return true; 
             }
 
@@ -251,7 +255,7 @@ bool list_remove_data(List **list, ListEqualFunc callback,ListValue data){
             }
             
             free(entry);
-            (*list)->size--;
+            list->_impl->size--;
             break;
         }
         entry = entry->next;
@@ -260,20 +264,20 @@ bool list_remove_data(List **list, ListEqualFunc callback,ListValue data){
 }
 
 
-bool list_remove_nth_entry(List** list, size_t n){
+bool list_remove_nth_entry(List* list, size_t n){
     if(list == NULL){
         return false;
     }
-    ListEntry* entry = list_nth_entry(*list,n);
+    ListEntry* entry = list_nth_entry(list,n);
 
     if(entry == NULL){
         return false;
     }
 
     if(entry->prev == NULL){
-        (*list)->head = entry->next;
+        list->_impl->head = entry->next;
         free(entry);
-        (*list)->size--;
+        list->_impl->size--;
         return true; 
     }
 
@@ -288,7 +292,7 @@ bool list_remove_nth_entry(List** list, size_t n){
     }
     
     free(entry);
-    (*list)->size--;
+    list->_impl->size--;
     return true;
 }
 
@@ -394,12 +398,12 @@ static ListEntry *list_sort_internal(ListEntry **list, ListCompareFunc compare_f
 }
 
 
-void list_sort(List **list, ListCompareFunc compare_func){
-    ListEntry* tail = list_sort_internal(&((*list)->head),compare_func);
-    (*list)->tail = tail;
+void list_sort(List *list, ListCompareFunc compare_func){
+    ListEntry* tail = list_sort_internal(&(list->_impl->head),compare_func);
+    list->_impl->tail = tail;
     ListEntry* rev_itr = tail;
     while(rev_itr->prev!=NULL){
         rev_itr = rev_itr->prev;
     }
-    (*list)->head = rev_itr;
+    list->_impl->head = rev_itr;
 }

@@ -130,7 +130,7 @@ void list_free(List *list);
  * @param data         The value to prepend.
  * @return             True if value is appended, otherwise false
  */
-bool list_push_front(List **list, ListValue data);
+bool list_push_front(List *list, ListValue data);
 
 
 /**
@@ -140,7 +140,7 @@ bool list_push_front(List **list, ListValue data);
  * @param data         The value to append.
  * @return             True if value is appended, otherwise false
  */
-bool list_push_back(List **list, ListValue data);
+bool list_push_back(List *list, ListValue data);
 
 
 /**
@@ -150,7 +150,7 @@ bool list_push_back(List **list, ListValue data);
  * @return             True if value is removed successfully, otherwise false
  */
 
-bool list_pop_front(List **list);
+bool list_pop_front(List *list);
 
 
 /**
@@ -159,7 +159,7 @@ bool list_pop_front(List **list);
  * @param list         Pointer to the list to remove from.
  * @return             True if value is removed successfully, otherwise false
  */
-bool list_pop_back(List **list);
+bool list_pop_back(List *list);
 
 
 /**
@@ -211,13 +211,6 @@ size_t list_size(List *list);
 bool list_empty(List *list);
 
 
-/**
- * Reverses the contents of a list.
- *
- * @param list       The list.
- */
-void list_reverse(List ** list);
-
 
 /**
  * Prints the contents of a list.
@@ -238,7 +231,7 @@ void list_print(List *list, ListPrintData print);
  * @param data       The value to remove from the list.
  * @return           The number of entries removed from the list.
  */
-bool list_remove_data(List **list, ListEqualFunc callback, ListValue data);
+bool list_remove_data(List *list, ListEqualFunc callback, ListValue data);
 
 
 /**
@@ -249,7 +242,7 @@ bool list_remove_data(List **list, ListEqualFunc callback, ListValue data);
  * @return           If the entry is not found in the list, returns false,
  *                   else returns true.
  */
-bool list_remove_nth_entry(List** list, size_t n);
+bool list_remove_nth_entry(List* list, size_t n);
 
 
 /**
@@ -258,7 +251,7 @@ bool list_remove_nth_entry(List** list, size_t n);
  * @param list          Pointer to the list to sort.
  * @param compare_func  Function used to compare values in the list.
  */
-void list_sort(List **list, ListCompareFunc compare_func);
+void list_sort(List *list, ListCompareFunc compare_func);
 
 
 #ifdef __cplusplus
