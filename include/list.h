@@ -53,6 +53,7 @@ CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 extern "C" {
 #endif
 
+
 /**
  * Represents an entry in a doubly-linked list.  
  */
@@ -73,6 +74,18 @@ typedef struct _List List;
  * A value stored in a list.
  */
 typedef void *ListValue;
+
+
+/**
+ * An iterator used to traverse the list
+ */
+typedef struct _ListIterator ListIterator;
+
+
+/**
+ * A reverse iterator for the list
+ */
+typedef struct _ListReverseIterator ListReverseIterator;
 
 
 /**
@@ -149,7 +162,6 @@ bool list_push_back(List *list, ListValue data);
  * @param list         Pointer to the list to remove from.
  * @return             True if value is removed successfully, otherwise false
  */
-
 bool list_pop_front(List *list);
 
 
@@ -211,7 +223,6 @@ size_t list_size(List *list);
 bool list_empty(List *list);
 
 
-
 /**
  * Prints the contents of a list.
  *
@@ -252,6 +263,90 @@ bool list_remove_nth_entry(List* list, size_t n);
  * @param compare_func  Function used to compare values in the list.
  */
 void list_sort(List *list, ListCompareFunc compare_func);
+
+
+/**
+ * Returns a new iterator to the given entry
+ *
+ * @param entry         Pointer to the entry
+ * @return              A new list iterator
+ */
+ListIterator * list_iter_new(ListEntry * entry);
+
+
+/**
+ * Frees / Deallocates a given iterator
+ *
+ * @param itr           Pointer to the iterator
+ */
+void list_iter_free(ListIterator * itr);
+
+
+/**
+ * Returns an iterator next to a given iterator
+ *
+ * @param itr           Pointer to the iterator
+ * @return              Pointer next to the given iterator
+ */
+ListIterator*  list_iter_next(ListIterator * itr);
+
+
+/**
+ * Returns a new reverse iterator to the given entry
+ *
+ * @param entry         Pointer to the entry
+ * @return              A new list reverse iterator
+ */
+ListReverseIterator * list_rev_iter_new(ListEntry * entry);
+
+
+/**
+ * Frees / Deallocates a given reverse iterator
+ *
+ * @param itr           Pointer to the reverse iterator
+ */
+void list_rev_iter_free(ListReverseIterator * itr);
+
+
+/**
+ * Returns a reverse iterator prev to a given reverseiterator
+ *
+ * @param itr           Pointer to the reverse iterator
+ * @return              Pointer previous to the given reverse iterator
+ */
+ListReverseIterator * list_rev_iter_prev(ListIterator * itr);
+
+
+/**
+ * Returns an iterator to the beginning of the list
+ *
+ * @param list          Pointer to the list.
+ */
+ListIterator*  list_begin(List *list);
+
+
+/**
+ * Returns an iterator to the end of the list
+ *
+ * @param list          Pointer to the list.
+ */
+ListIterator*  list_end(List *list);
+
+
+/**
+ * Returns an reverse iterator to the beginning of the list (end)
+ *
+ * @param list          Pointer to the list.
+ */
+ListReverseIterator*  list_rbegin(List *list);
+
+
+/**
+ * Returns an reverse iterator to the end of the list (beginnning)
+ *
+ * @param list          Pointer to the list.
+ */
+ListReverseIterator*  list_rend(List *list);
 
 
 #ifdef __cplusplus
