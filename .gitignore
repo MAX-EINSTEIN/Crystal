@@ -1,8 +1,8 @@
-#vscode files
+#vscode folder
 .vscode/
 
-#linux build files
-linux/
+#build files
+build/
 
-#win32 build files
-win32/
+#nvim files
+*.swp
