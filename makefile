@@ -1,21 +1,20 @@
 all: list stack queue vector
-	ar -rcs build/libcrystal.a build/list.o build/stack.o build/queue.o build/vector.o
+	echo "All tests generated"
 
-list: include/list.h src/list.c
-	gcc -O3 -c src/list.c -o build/list.o
+list: include/list.h src/list.c test/list_test.c
+	gcc -O3 src/list.c test/list_test.c -o build/list_test.out
 
-stack: list include/stack.h src/stack.c
-	gcc -O3 -c src/stack.c build/list.o -o build/stack.o
+stack: include/stack.h src/stack.c test/stack_test.c src/list.c
+	gcc -O3 src/list.c src/stack.c test/stack_test.c -o build/stack_test.out
 
-queue: list include/queue.h src/queue.c
-	gcc -O3 -c src/queue.c build/list.o -o build/queue.o
+queue: include/queue.h src/queue.c test/queue_test.c src/list.c
+	gcc -O3 src/list.c src/queue.c test/queue_test.c -o build/queue_test.out
 
-vector: include/vector.h  src/vector.c
-	gcc -O3 -c src/vector.c -o build/vector.o	
+vector: include/vector.h  src/vector.c test/vector_test.c
+	gcc -O3 src/vector.c test/vector_test.c -o build/vector_test.out
 
 clean:
-	rm build/libcrystal.a
-	rm build/list.o
-	rm build/stack.o
-	rm build/queue.o
-	rm build/vector.o
+	rm build/list_test.out
+	rm build/stack_test.out
+	rm build/queue_test.out
+	rm build/vector_test.out

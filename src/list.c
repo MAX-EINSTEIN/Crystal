@@ -397,7 +397,9 @@ void list_sort(List *list, ListCompareFunc compare_func){
 ListIterator*  list_begin(List *list){
     if(list == NULL) return NULL;
 
-    ListIterator*  begin = list_iter_new(list->_impl->head);
+    ListIterator*  begin = (ListIterator*) malloc(sizeof(ListIterator));
+    begin->entry = list->_impl->head;
+    begin->has_next = (list->_impl->head->next!=NULL)?true:false;
     return begin;
 }
 
@@ -405,7 +407,9 @@ ListIterator*  list_begin(List *list){
 ListIterator*  list_end(List *list){
     if(list == NULL) return NULL;
 
-    ListIterator* end = list_iter_next(list->_impl->tail);
+    ListIterator* end = (ListIterator*) malloc(sizeof(ListIterator));
+    end->entry = list->_impl->tail;
+    end->has_next = NULL;
     return end;
 }
 
