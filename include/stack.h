@@ -37,10 +37,18 @@ CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  * Size of the stack can be retrieved using stack_size
  */
 
+#ifndef STACK_H
+#define STACK_H
+
 #include <stdlib.h>
 #include <stdbool.h>
 
 #include "list.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 
 /**
@@ -102,3 +110,9 @@ bool stack_empty(Stack* stack);
  * @return            Size of the stack
  */
 size_t stack_size(Stack* stack);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // STACK_H ends

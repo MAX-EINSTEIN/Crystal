@@ -38,11 +38,17 @@ CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  * Size of the queue can be retrieved using queue_size
  */
 
+#ifndef QUEUE_H
+#define QUEUE_H
+
 #include <stdlib.h>
 #include <stdbool.h>
 
 #include "list.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /**
  * A queue is represented by a struct _Queue and typedef-ed to Queue.
@@ -110,3 +116,9 @@ bool queue_empty(Queue* queue);
  * @return            Size of the queue
  */
 size_t queue_size(Queue* queue);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // QUEUE_H ends
