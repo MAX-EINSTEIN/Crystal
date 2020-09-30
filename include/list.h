@@ -55,12 +55,6 @@ extern "C" {
 
 
 /**
- * Represents an entry in a doubly-linked list.  
- */
-typedef struct _ListEntry ListEntry;
-
-
-/**
  * A _List struct is used to represent a Doubly-linked list.
  * The empty list is represented by a NULL pointer. 
  * To initialise a new doubly linked list, 
@@ -68,6 +62,12 @@ typedef struct _ListEntry ListEntry;
  * containing a pointer to NULL.
  */
 typedef struct _List List;
+
+
+/**
+ * Represents an entry in a doubly-linked list.  
+ */
+typedef struct _ListEntry ListEntry;
 
 
 /**
