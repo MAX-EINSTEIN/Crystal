@@ -101,6 +101,9 @@ typedef int (*SListCompareFunc)(SListValue value1, SListValue value2);
 typedef int (*SListEqualFunc)(SListValue value1, SListValue value2);
 
 
+typedef void (*SListValueOperation)(SListValue value);
+
+
 /**
  * Create a new list.
  *
@@ -114,6 +117,18 @@ SList* slist_new();
  * @param list           The list to free.
  */
 void slist_free(SList *list);
+
+
+/**
+ * Find the length of a list.
+ *
+ * @param list       The list.
+ * @return           The number of entries in the list.
+ */
+size_t slist_size(SList* list);
+
+
+bool slist_empty(SList* list);
 
 
 /**
@@ -138,6 +153,9 @@ bool slist_push_front(SList* list, SListValue data);
 bool slist_push_back(SList* list, SListValue data);
 
 
+bool slist_insert_at(SList* list, SListValue data, size_t n);
+
+
 /**
  * Removes a value from the start of a list.
  *
@@ -156,24 +174,7 @@ bool slist_pop_front(SList *list);
 bool slist_pop_back(SList *list);
 
 
-/**
- * Set the value at a list entry. The value provided will be written to the 
- * given listentry. If listentry is NULL nothing is done.
- *
- * @param listentry 	Pointer to the list entry.
- * @param value			The value to set.
- */
-void slist_set_data(SListEntry *listentry, SListValue value);
-
-
-/**
- * Retrieve the entry at a specified index in a list.
- *
- * @param list       The list.
- * @param n          The index into the list .
- * @return           The entry at the specified index, or NULL if out of range.
- */
-SListEntry *slist_entry_at(SList* list, unsigned int n);
+bool slist_remove_at(SList* list, size_t n);
 
 
 /**
@@ -184,27 +185,10 @@ SListEntry *slist_entry_at(SList* list, unsigned int n);
  * @return           The value stored at the specified index, or
  *                   @ref SLIST_NULL if unsuccessful.
  */
-SListValue slist_value_at(SList* list, unsigned int n);
+SListValue slist_value_at(SList* list, size_t n);
 
 
-/**
- * Find the length of a list.
- *
- * @param list       The list.
- * @return           The number of entries in the list.
- */
-size_t slist_size(SList* list);
-
-
-/**
- * Remove an entry from a list.
- *
- * @param list       Pointer to the list.
- * @param entry      The list entry to remove.
- * @return           If the entry is not found in the list, returns zero,
- *                   else returns non-zero.
- */
-int slist_remove_entry(SList* list, SListEntry *entry);
+void slist_traverse(SList* list,  SListValueOperation operation);
 
 
 #ifdef __cplusplus
