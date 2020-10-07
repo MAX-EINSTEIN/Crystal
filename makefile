@@ -4,6 +4,9 @@ all: list stack queue vector
 list: include/list.h src/list.c test/list_test.c
 	gcc -O3 src/list.c test/list_test.c -o build/list_test.out
 
+slist: include/slist.h src/slist.c test/slist_test.c
+	gcc -O3 src/slist.c test/slist_test.c -o build/slist_test.out
+
 stack: include/stack.h src/stack.c test/stack_test.c src/list.c
 	gcc -O3 src/list.c src/stack.c test/stack_test.c -o build/stack_test.out
 

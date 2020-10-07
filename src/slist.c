@@ -90,9 +90,7 @@ bool slist_push_front(SList* list, SListValue data){
     newEntry->data = data;
     newEntry->next = list->_impl->head;
 
-    if(list->_impl->head != NULL){
-        list->_impl->head = newEntry;
-    }
+    list->_impl->head = newEntry;
 
     list->_impl->size++;
     return true;
@@ -128,6 +126,15 @@ bool slist_push_back(SList* list, SListValue data){
 
 bool slist_insert_at(SList* list, SListValue data, size_t n){
     if(n > slist_size(list)) return false;
+
+    if(n == 0){
+        slist_push_front(list, data);
+        return true;
+    } 
+    else if(n == slist_size(list)){
+        slist_push_back(list, data);
+        return true;
+    }
 
     SListEntry * newEntry = (SListEntry*) malloc(sizeof(SListEntry));
     if(newEntry == NULL){
@@ -189,15 +196,22 @@ bool slist_pop_back(SList *list){
 bool slist_remove_at(SList* list, size_t n){
     if(n > slist_size(list)) return false;
 
-    int pos = 0;
+    if(n == 0){
+        slist_pop_front(list);
+        return true;
+    }else if(n == slist_size(list) - 1) {
+        slist_pop_back(list);
+        return true;
+    }
+
     SListEntry* iterator = list->_impl->head;
-    while(pos < n-1){
+    for(int pos = 0; iterator != NULL && pos < n-1; ++pos){
         iterator = iterator->next;
-        ++pos;
-    } 
-    SListEntry* nth_node = iterator->next;
-    iterator->next = NULL;
-    free(nth_node);
+    }
+
+    SListEntry* next_to_nth_node = iterator->next->next;
+    free(iterator->next);
+    iterator->next = next_to_nth_node;
 
     list->_impl->size--;
     return true;
