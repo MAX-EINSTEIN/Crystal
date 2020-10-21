@@ -1,4 +1,4 @@
-all: list stack queue vector
+all: list slist clist stack queue vector
 	echo "All tests generated"
 
 list: include/list.h src/list.c test/list_test.c
@@ -6,6 +6,9 @@ list: include/list.h src/list.c test/list_test.c
 
 slist: include/slist.h src/slist.c test/slist_test.c
 	gcc -O3 src/slist.c test/slist_test.c -o build/slist_test.out
+
+clist: include/clist.h src/clist.c test/clist_test.c
+	gcc -O3 src/clist.c test/clist_test.c -o build/clist_test.out
 
 stack: include/stack.h src/stack.c test/stack_test.c src/list.c
 	gcc -O3 src/list.c src/stack.c test/stack_test.c -o build/stack_test.out

@@ -74,15 +74,6 @@ int main()
         printf("List size : %ld\n", list_size(list));
     }
 
-    
-    printf("\nTESTING list_sort\n");
-    {
-        list_sort(list,compares_int);
-        printf("List: ");
-        list_print(list,print_int);
-        printf("List size : %ld\n", list_size(list));
-    }
-
 
     printf("\nTESTING list_nth_entry and list_nth data\n");
     {

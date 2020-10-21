@@ -79,13 +79,13 @@ typedef void *ListValue;
 /**
  * An iterator used to traverse the list
  */
-typedef struct _ListIterator ListIterator;
+typedef ListEntry ListIterator;
 
 
 /**
  * A reverse iterator for the list
  */
-typedef struct _ListReverseIterator ListReverseIterator;
+typedef ListEntry ListReverseIterator;
 
 
 /**
@@ -256,31 +256,6 @@ bool list_remove_data(List *list, ListEqualFunc callback, ListValue data);
 bool list_remove_nth_entry(List* list, size_t n);
 
 
-/**
- * Sort a list.
- *
- * @param list          Pointer to the list to sort.
- * @param compare_func  Function used to compare values in the list.
- */
-void list_sort(List *list, ListCompareFunc compare_func);
-
-
-/**
- * Returns a new iterator to the given entry
- *
- * @param entry         Pointer to the entry
- * @return              A new list iterator
- */
-ListIterator * list_iter_new(ListEntry * entry);
-
-
-/**
- * Frees / Deallocates a given iterator
- *
- * @param itr           Pointer to the iterator
- */
-void list_iter_free(ListIterator * itr);
-
 
 /**
  * Returns an iterator next to a given iterator
@@ -291,22 +266,6 @@ void list_iter_free(ListIterator * itr);
 ListIterator*  list_iter_next(ListIterator * itr);
 
 
-/**
- * Returns a new reverse iterator to the given entry
- *
- * @param entry         Pointer to the entry
- * @return              A new list reverse iterator
- */
-ListReverseIterator * list_rev_iter_new(ListEntry * entry);
-
-
-/**
- * Frees / Deallocates a given reverse iterator
- *
- * @param itr           Pointer to the reverse iterator
- */
-void list_rev_iter_free(ListReverseIterator * itr);
-
 
 /**
  * Returns a reverse iterator prev to a given reverseiterator
@@ -314,7 +273,7 @@ void list_rev_iter_free(ListReverseIterator * itr);
  * @param itr           Pointer to the reverse iterator
  * @return              Pointer previous to the given reverse iterator
  */
-ListReverseIterator * list_rev_iter_prev(ListIterator * itr);
+ListReverseIterator * list_rev_prev(ListIterator * itr);
 
 
 /**

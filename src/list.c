@@ -26,18 +26,7 @@ struct _ListEntry {
 	ListEntry *next;
 };
 
-/* Iterator of a Double Linked List */
-struct _ListIterator{
-    ListEntry * entry;
-    bool has_next;
-};
-
-/* Reverse Iterator of a Doubly linked list */
-struct _ListReverseIterator{
-    ListEntry * entry;
-    bool has_prev;
-};
-
+ 
 /* Internal Represnatation of a list */
 struct _ListInternal{
     ListEntry * head;
@@ -75,7 +64,7 @@ void list_free(List *list){
     ListEntry* iterator = list->_impl->head;
     while(iterator!=NULL){
         ListEntry* next = iterator->next;
-        free(iterator);
+        if(iterator != NULL) free(iterator);
         iterator = NULL;
         iterator = next;
     } 
@@ -309,168 +298,37 @@ bool list_remove_nth_entry(List* list, size_t n){
 }
 
 
-/* Function used internally for sorting.  Returns the last entry in the
- * new sorted list */
-static ListEntry *list_sort_internal(ListEntry **list, ListCompareFunc compare_func)
-{
-	ListEntry *pivot;
-	ListEntry *rover;
-	ListEntry *less_list, *more_list;
-	ListEntry *less_list_end, *more_list_end;
-
-	if (list == NULL || compare_func == NULL) {
-		return NULL;
-	}
-
-	if (*list == NULL || (*list)->next == NULL) {
-		return *list;
-	}
-
-	pivot = *list;
-
-	less_list = NULL;
-	more_list = NULL;
-	rover = (*list)->next;
-
-	while (rover != NULL) {
-		ListEntry *next = rover->next;
-
-		if (compare_func(rover->data, pivot->data) < 0) {
-
-			rover->prev = NULL;
-			rover->next = less_list;
-			if (less_list != NULL) {
-				less_list->prev = rover;
-			}
-			less_list = rover;
-
-		} else {
-
-			rover->prev = NULL;
-			rover->next = more_list;
-			if (more_list != NULL) {
-				more_list->prev = rover;
-			}
-			more_list = rover;
-		}
-
-		rover = next;
-	}
-
-	less_list_end = list_sort_internal(&less_list, compare_func);
-	more_list_end = list_sort_internal(&more_list, compare_func);
-
-	*list = less_list;
-
-	if (less_list == NULL) {
-		pivot->prev = NULL;
-		*list = pivot;
-	} else {
-		pivot->prev = less_list_end;
-		less_list_end->next = pivot;
-	}
-
-	pivot->next = more_list;
-	if (more_list != NULL) {
-		more_list->prev = pivot;
-	}
-
-	if (more_list == NULL) {
-		return pivot;
-	} else {
-		return more_list_end;
-	}
-}
-
-
-void list_sort(List *list, ListCompareFunc compare_func){
-    ListEntry* tail = list_sort_internal(&(list->_impl->head),compare_func);
-    list->_impl->tail = tail;
-    ListEntry* rev_itr = tail;
-    while(rev_itr->prev!=NULL){
-        rev_itr = rev_itr->prev;
-    }
-    list->_impl->head = rev_itr;
-}
-
-
 ListIterator*  list_begin(List *list){
     if(list == NULL) return NULL;
-
-    ListIterator*  begin = (ListIterator*) malloc(sizeof(ListIterator));
-    begin->entry = list->_impl->head;
-    begin->has_next = (list->_impl->head->next!=NULL)?true:false;
-    return begin;
+    return list->_impl->head;
 }
 
 
 ListIterator*  list_end(List *list){
     if(list == NULL) return NULL;
-
-    ListIterator* end = (ListIterator*) malloc(sizeof(ListIterator));
-    end->entry = list->_impl->tail;
-    end->has_next = NULL;
-    return end;
+    return list->_impl->tail;
 }
 
 
 ListReverseIterator*  list_rbegin(List *list){
     if(list == NULL) return NULL;
-
-    ListReverseIterator* rbegin = (ListReverseIterator*) malloc(sizeof(ListReverseIterator));
-    rbegin->entry = list->_impl->tail;
-    rbegin->has_prev = (list->_impl->tail->prev == NULL)?false:true;
-    return rbegin;
+    return list->_impl->tail;
 }
 
 
 ListReverseIterator*  list_rend(List *list){
     if(list == NULL) return NULL;
-
-    ListReverseIterator* rend = (ListReverseIterator*) malloc(sizeof(ListReverseIterator));
-    rend->entry = list->_impl->head;
-    rend->has_prev = false;
-    return rend;
-}
-
-
-ListIterator * list_iter_new(ListEntry * entry){
-    if(entry == NULL) return NULL;
-
-    ListIterator * new_iter = (ListIterator*) malloc(sizeof(ListIterator));
-    new_iter->entry = entry;
-    new_iter->has_next = (entry->next != NULL)?true:false;
-    return new_iter;
-}
-
-
-void list_iter_free(ListIterator * itr){
-    free(itr);
+    return list->_impl->head;
 }
 
 
 ListIterator*  list_iter_next(ListIterator * itr){
     if(itr == NULL) return NULL;
-    return list_iter_new(itr->entry->next);
-}
-
-
-ListReverseIterator * list_rev_iter_new(ListEntry * entry){
-    if(entry == NULL) return NULL;
-
-    ListReverseIterator * new_rev_iter = (ListReverseIterator*) malloc(sizeof(ListReverseIterator));
-    new_rev_iter->entry = entry;
-    new_rev_iter->has_prev = (entry->prev != NULL)?true:false;
-    return new_rev_iter;
-}
-
-
-void list_rev_iter_free(ListReverseIterator * itr){
-    free(itr);
+    return itr->next;
 }
 
 
 ListReverseIterator * list_rev_iter_prev(ListIterator * itr){
     if(itr == NULL) return NULL;
-    return list_rev_iter_new(itr->entry->prev);
+    return itr->prev;
 }
